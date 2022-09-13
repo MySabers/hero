@@ -8,10 +8,15 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 @Component
 public class SocketInitializer extends ChannelInitializer<SocketChannel> {
     LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
-    MessageCodecSharable MESSAGE_CODEC = new MessageCodecSharable();
+
+    @Resource
+    MessageCodecSharable MESSAGE_CODEC;
+
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {

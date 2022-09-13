@@ -11,6 +11,7 @@ import io.netty.handler.codec.MessageToMessageCodec;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @Slf4j
 @ChannelHandler.Sharable
+@Component
 public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message> {
 
     @Value("${serializer.algorithm:Json}")
@@ -33,6 +35,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
 
     @Override
     public void encode(ChannelHandlerContext ctx, Message msg, List<Object> outList) throws Exception {
+        System.out.println("我执行了吗");
         ByteBuf out = ctx.alloc().buffer();
         // 1. 7 字节的魔数
         out.writeBytes(magic.getBytes());

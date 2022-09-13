@@ -16,9 +16,4 @@ public class LoginRequestMessage extends Message {
         this.username = username;
         this.password = password;
     }
-
-    @Override
-    public int getMessageType() {
-        return LoginRequestMessage;
-    }
 }
