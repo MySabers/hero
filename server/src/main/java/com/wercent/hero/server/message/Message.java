@@ -7,4 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-public abstract class Message implements Serializable {}
+public abstract class Message implements Serializable {
+    private int sequenceId;
+}
