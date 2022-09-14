@@ -1,30 +1,35 @@
-package com.wercent.hero.handler;
+package com.wercent.hero.server.handler;
 
-
-import com.wercent.hero.message.LoginRequestMessage;
-import com.wercent.hero.message.LoginResponseMessage;
-import com.wercent.hero.service.UserService;
-//import com.wercent.hero.service.UserServiceFactory;
-import com.wercent.hero.session.SessionFactory;
+import com.wercent.hero.server.message.LoginRequestMessage;
+import com.wercent.hero.server.message.LoginResponseMessage;
+import com.wercent.hero.server.service.UserService;
+import com.wercent.hero.server.session.Session;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 @ChannelHandler.Sharable
+@Controller
 public class LoginRequestMessageHandler extends SimpleChannelInboundHandler<LoginRequestMessage> {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final Session session;
+
+    public LoginRequestMessageHandler(UserService userService, Session session) {
+        this.userService = userService;
+        this.session = session;
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestMessage msg) throws Exception {
         String username = msg.getUsername();
         String password = msg.getPassword();
-//        boolean login = UserServiceFactory.getUserService().login(username, password);
+        boolean login = userService.login(username, password);
         LoginResponseMessage message;
-        if (true) {
-            SessionFactory.getSession().bind(ctx.channel(), username);
+        if (login) {
+            session.bind(ctx.channel(), username);
             message = new LoginResponseMessage(true, "登录成功");
         } else {
             message = new LoginResponseMessage(false, "用户名或密码不正确");

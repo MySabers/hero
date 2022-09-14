@@ -17,7 +17,6 @@ public class SocketInitializer extends ChannelInitializer<SocketChannel> {
     @Resource
     MessageCodecSharable MESSAGE_CODEC;
 
-
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ch.pipeline().addLast(new ProtocolFrameDecoder());

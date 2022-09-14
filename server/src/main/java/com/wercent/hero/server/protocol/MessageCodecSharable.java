@@ -29,7 +29,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
     @Value("${serializer.algorithm:Json}")
     private String serializerAlgorithm;
 
-    private final String magic = "@hero-c";
+    private final String magic = "@he";
 
     private final TypeInfo typeInfo;
 
@@ -40,18 +40,19 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
     @Override
     public void encode(ChannelHandlerContext ctx, Message msg, List<Object> outList) throws Exception {
         ByteBuf out = ctx.alloc().buffer();
-        // 1. 7 字节的魔数
+        // 1. 3 字节的魔数
         out.writeBytes(magic.getBytes());
         // 2. 1 字节的序列化方式 json 0
         out.writeByte(Config.getSerializerAlgorithm(serializerAlgorithm).ordinal());
         // 类型
         byte[] messageType = typeInfo.getNameByType(msg.getClass()).getBytes();
+        // 3. 4 字节消息类型长度
+        out.writeInt(messageType.length);
+        // 正文内容
         byte[] bytes = Config.getSerializerAlgorithm().serialize(msg);
         // --------- 消息体 ------------
-        // 3. 剩余总长度: 正文长度 + 消息类型长度 + 消息类型
-        out.writeInt(bytes.length + 4 + messageType.length);
-        // 4. 消息类型长度
-        out.writeInt(messageType.length);
+        // 3. 剩余总长度: 正文  + 消息类型
+        out.writeInt(bytes.length + messageType.length);
         // 5. 消息类型
         out.writeBytes(messageType);
         // 6. 正文长度
@@ -71,16 +72,16 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         }
         // 序列化算法
         byte serializerAlgorithm = in.readByte(); // 0
-        // 总长度
-        int totalLength = in.readInt();
         // 类型长度
         int typeLength = in.readInt();
+        // 总长度
+        int totalLength = in.readInt();
         // 类型内容
         byte[] byteType = new byte[typeLength];
         in.readBytes(byteType, 0, typeLength);
         String type = new String(byteType, Charset.defaultCharset());
         // 正文内容
-        int contentLength = totalLength - 4 - typeLength;
+        int contentLength = totalLength - typeLength;
         byte[] content = new byte[contentLength];
         in.readBytes(content, 0, contentLength);
         // 找到反序列化算法
@@ -90,7 +91,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
         try {
             messageClass = typeInfo.getTypeByName(type);
         } catch (Exception e) {
-            log.error("找不到对应的处理模块", e);
+            log.error("找不到对应的处理模块: {}", type, e);
 //            ctx.writeAndFlush("找不到对应的处理模块: " + type);
             return;
         }

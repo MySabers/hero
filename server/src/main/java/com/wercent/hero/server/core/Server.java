@@ -13,11 +13,13 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Slf4j
-@Component()
+@Component
 public class Server implements ApplicationRunner {
     @Resource
     private SocketInitializer socketInitializer;
@@ -38,6 +40,7 @@ public class Server implements ApplicationRunner {
      * 初始化netty配置
      */
     private void init() {
+        System.out.println(applicationContext.getBeansWithAnnotation(Controller.class));
         NioEventLoopGroup bossGroup = new NioEventLoopGroup();
         NioEventLoopGroup workerGroup = new NioEventLoopGroup();
         try {

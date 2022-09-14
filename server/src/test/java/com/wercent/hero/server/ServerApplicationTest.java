@@ -4,7 +4,6 @@ import com.wercent.hero.server.config.Config;
 import com.wercent.hero.server.message.LoginRequestMessage;
 import com.wercent.hero.server.message.Message;
 import com.wercent.hero.server.protocol.MessageCodecSharable;
-import com.wercent.hero.server.protocol.Serializer;
 import com.wercent.hero.server.utils.TypeInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -23,7 +22,7 @@ public class ServerApplicationTest {
         TypeInfo typeInfo = new TypeInfo() {
             @Override
             public String getNameByType(Class<?> type) {
-                return "loginRequesat";
+                return "loginRequest";
             }
 
             @Override
@@ -44,19 +43,19 @@ public class ServerApplicationTest {
     }
 
 
-    public static ByteBuf messageToByteBuf(Message msg, TypeInfo typeInfo) {
+    public ByteBuf messageToByteBuf(Message msg, TypeInfo typeInfo) {
         int algorithm = 0;
         ByteBuf out = ByteBufAllocator.DEFAULT.buffer();
-        out.writeBytes("@hero-c".getBytes());
+        out.writeBytes("@he".getBytes());
         out.writeByte(0);
         // 类型
         byte[] messageType = typeInfo.getNameByType(msg.getClass()).getBytes();
+        // 消息类型长度
+        out.writeInt(messageType.length);
         byte[] bytes = Config.getSerializerAlgorithm().serialize(msg);
         // --------- 消息体 ------------
         // 3. 剩余总长度: 正文长度 + 消息类型长度 + 消息类型
-        out.writeInt(bytes.length + 4 + messageType.length);
-        // 4. 消息类型长度
-        out.writeInt(messageType.length);
+        out.writeInt(bytes.length + messageType.length);
         // 5. 消息类型
         out.writeBytes(messageType);
         // 6. 正文长度

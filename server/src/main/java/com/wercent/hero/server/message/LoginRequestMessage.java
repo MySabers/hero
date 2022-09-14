@@ -1,16 +1,15 @@
 package com.wercent.hero.server.message;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 @Data
-@ToString(callSuper = true)
 @AllArgsConstructor
-@Component("loginRequest")
+@NoArgsConstructor
+@Repository("loginRequest")
 public class LoginRequestMessage extends Message {
     private String username;
     private String password;
