@@ -1,4 +1,4 @@
-package com.wercent.hero.server.message;
+package com.wercent.hero.client.message;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @NoArgsConstructor
 public class LoginResponseMessage extends AbstractResponseMessage {
-
     public LoginResponseMessage(boolean success, String reason) {
         super(success, reason);
     }
-
-
 }

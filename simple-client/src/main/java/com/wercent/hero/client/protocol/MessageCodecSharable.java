@@ -1,9 +1,8 @@
-package com.wercent.hero.server.protocol;
+package com.wercent.hero.client.protocol;
 
-
-import com.wercent.hero.server.config.Config;
-import com.wercent.hero.server.message.Message;
-import com.wercent.hero.server.utils.TypeInfo;
+import com.wercent.hero.client.config.Config;
+import com.wercent.hero.client.message.Message;
+import com.wercent.hero.client.utils.TypeInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -60,6 +59,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+        System.out.println("我执行了");
         byte[] magic = new byte[this.magic.length()];
         in.readBytes(magic, 0, this.magic.length());
         String receiveMagic = new String(magic);
@@ -94,7 +94,7 @@ public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message
             return;
         }
         Message message = (Message) algorithm.deserialize(messageClass, content);
-        log.debug("接收到的数据内容: {}", message);
+        log.info("接收到的数据为类型为: {}", message.getClass());
         out.add(message);
     }
 

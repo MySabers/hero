@@ -1,10 +1,7 @@
-package com.wercent.hero.server.utils;
-
-import org.springframework.stereotype.Controller;
+package com.wercent.hero.client.utils;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
-import java.util.Map;
 
 public interface TypeInfo {
 

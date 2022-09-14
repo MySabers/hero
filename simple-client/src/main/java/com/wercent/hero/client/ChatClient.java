@@ -1,12 +1,13 @@
-package com.wercent.hero.server;
+package com.wercent.hero.client;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@Slf4j
 @SpringBootApplication
-public class ServerApplication {
-
+public class ChatClient {
     public static void main(String[] args) {
-        SpringApplication.run(ServerApplication.class, args);
+        SpringApplication.run(ChatClient.class, args);
     }
 }
