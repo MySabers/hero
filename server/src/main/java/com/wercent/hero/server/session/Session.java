@@ -3,6 +3,8 @@ package com.wercent.hero.server.session;
 
 import io.netty.channel.Channel;
 
+import java.util.List;
+
 /**
  * 会话管理接口
  */
@@ -43,4 +45,10 @@ public interface Session {
      * @return channel
      */
     Channel getChannel(String username);
+
+    /**
+     * 获取所有登录的用户名
+     * @return 所有用户名
+     */
+    List<String> getNames();
 }

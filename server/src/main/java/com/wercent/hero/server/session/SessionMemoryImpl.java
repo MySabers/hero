@@ -1,11 +1,15 @@
 package com.wercent.hero.server.session;
 
 import io.netty.channel.Channel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 @Component
 public class SessionMemoryImpl implements Session {
 
@@ -22,9 +26,13 @@ public class SessionMemoryImpl implements Session {
 
     @Override
     public void unbind(Channel channel) {
-        String username = channelUsernameMap.remove(channel);
-        usernameChannelMap.remove(username);
-        channelAttributesMap.remove(channel);
+        try {
+            String username = channelUsernameMap.remove(channel);
+            usernameChannelMap.remove(username);
+            channelAttributesMap.remove(channel);
+        } catch (NullPointerException e) {
+            log.debug("该 {} 已释放", channel);
+        }
     }
 
     @Override
@@ -40,6 +48,11 @@ public class SessionMemoryImpl implements Session {
     @Override
     public Channel getChannel(String username) {
         return usernameChannelMap.get(username);
+    }
+
+    @Override
+    public List<String> getNames() {
+        return new ArrayList<>(usernameChannelMap.keySet());
     }
 
     @Override

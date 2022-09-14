@@ -3,6 +3,7 @@ package com.wercent.hero.client.core;
 import com.wercent.hero.client.gui.Login;
 import com.wercent.hero.client.handler.ClientChannelDuplexHandler;
 import com.wercent.hero.client.handler.LoginResponseHandler;
+import com.wercent.hero.client.handler.UserResponseHandler;
 import com.wercent.hero.common.protocol.MessageCodecSharable;
 import com.wercent.hero.common.protocol.ProtocolFrameDecoder;
 import com.wercent.hero.common.utils.TypeInfo;
@@ -13,26 +14,25 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Component
 public class SocketInitializer extends ChannelInitializer<SocketChannel> {
     LoggingHandler LOGGING_HANDLER = new LoggingHandler(LogLevel.DEBUG);
-    private final LoginResponseHandler LOGIN_RESPONSE_HANDLER;
 
     private final MessageCodecSharable MESSAGE_CODEC;
     private final TypeInfo typeInfo;
 
     private final Login loginFrame;
 
-    public SocketInitializer(MessageCodecSharable MESSAGE_CODEC,
-                             TypeInfo typeInfo, Login loginFrame, LoginResponseHandler LOGIN_RESPONSE_HANDLER) {
+    public SocketInitializer(MessageCodecSharable MESSAGE_CODEC, TypeInfo typeInfo, Login loginFrame) {
         this.MESSAGE_CODEC = MESSAGE_CODEC;
         this.typeInfo = typeInfo;
         this.loginFrame = loginFrame;
-        this.LOGIN_RESPONSE_HANDLER = LOGIN_RESPONSE_HANDLER;
     }
     AtomicBoolean EXIT = new AtomicBoolean(false);
 
@@ -55,17 +55,19 @@ public class SocketInitializer extends ChannelInitializer<SocketChannel> {
 
             @Override
             public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-                log.debug("连接已经断开，按任意键退出..");
+                log.info("连接已经断开，按任意键退出..");
                 EXIT.set(true);
             }
 
             @Override
             public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-                log.debug("连接已经断开，按任意键退出..{}", cause.getMessage());
+                log.info("连接已经断开，按任意键退出..{}", cause.getMessage());
                 EXIT.set(true);
             }
         });
-        ch.pipeline().addLast(LOGIN_RESPONSE_HANDLER);
-
+        List<Object> handles = typeInfo.getBeansWithAnnotation(Controller.class);
+        for (Object handle : handles) {
+            ch.pipeline().addLast((ChannelHandler) handle);
+        }
     }
 }

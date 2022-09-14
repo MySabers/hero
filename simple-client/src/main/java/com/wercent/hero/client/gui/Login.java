@@ -107,7 +107,8 @@ public class Login implements Gui {
             if (!LOGIN.get()) {
                 JOptionPane.showMessageDialog(null, "用户名或密码不正确!");
             } else {
-
+                this.destroy();
+                new Index().process(channel);
             }
         });
     }

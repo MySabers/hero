@@ -7,8 +7,10 @@ import com.wercent.hero.server.session.Session;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 
+@Slf4j
 @ChannelHandler.Sharable
 @Controller
 public class LoginRequestMessageHandler extends SimpleChannelInboundHandler<LoginRequestMessage> {

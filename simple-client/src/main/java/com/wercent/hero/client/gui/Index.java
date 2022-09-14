@@ -1,5 +1,6 @@
 package com.wercent.hero.client.gui;
 
+import com.wercent.hero.common.message.UserRequestMessage;
 import io.netty.channel.Channel;
 
 import javax.swing.*;
@@ -15,23 +16,25 @@ public class Index implements Gui{
 
     @Override
     public void process(Channel channel) {
+        channel.writeAndFlush(new UserRequestMessage());
         frame.setSize(700, 500);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
+        // 左侧好友栏
         frame.setLayout(new BorderLayout());
         JPanel left = new JPanel();
+        this.buildLeft(left, channel);
+
+        // 右侧内容栏
         JPanel right = new JPanel();
-
         right.setLayout(new BorderLayout());
+        buildRight(right, channel);
 
-        // 添加面板
-//        frame.add(panel);
-        /*
-         * 调用用户定义的方法并添加组件到面板
-         */
-//        placeComponents(panel);
+        frame.add(left, BorderLayout.WEST);
+        frame.add(right, BorderLayout.CENTER);
+
 
         // 设置界面可见
         frame.setVisible(true);
@@ -48,8 +51,28 @@ public class Index implements Gui{
     }
 
 
+    private void buildLeft(JPanel panel, Channel channel) {
+        setBorderAndTitle(panel, "在线好友列表", 150, frame.getHeight());
+    }
+
+    private void buildRight(JPanel panel, Channel channel) {
+        JPanel top = new JPanel();
+        JPanel bottom = new JPanel();
+        panel.add(top, BorderLayout.NORTH);
+        panel.add(bottom, BorderLayout.SOUTH);
+        setBorderAndTitle(top, "聊天内容", frame.getWidth() - 150, frame.getHeight() - 200);
+        setBorderAndTitle(bottom, "输入框", frame.getWidth() - 150, 160);
+    }
+
+    private void setBorderAndTitle(JPanel panel, String title, int width, int height) {
+        panel.setBorder(BorderFactory.createTitledBorder(title));
+        panel.setPreferredSize(new Dimension(width, height));
+    }
+
+
+
+
     @Override
     public void destroy() {
-
     }
 }
