@@ -1,4 +1,4 @@
-package com.wercent.hero.client.protocol;
+package com.wercent.hero.common.protocol;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

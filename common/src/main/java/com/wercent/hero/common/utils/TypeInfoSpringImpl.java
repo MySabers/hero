@@ -1,4 +1,4 @@
-package com.wercent.hero.client.utils;
+package com.wercent.hero.common.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.wercent.hero.server.protocol;
+package com.wercent.hero.common.protocol;
 
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 

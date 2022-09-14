@@ -16,6 +16,7 @@
     <modules>
         <module>server</module>
         <module>simple-client</module>
+        <module>common</module>
     </modules>
 
     <properties>

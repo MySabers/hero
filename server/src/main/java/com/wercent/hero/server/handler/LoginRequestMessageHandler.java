@@ -1,7 +1,7 @@
 package com.wercent.hero.server.handler;
 
-import com.wercent.hero.server.message.LoginRequestMessage;
-import com.wercent.hero.server.message.LoginResponseMessage;
+import com.wercent.hero.common.message.LoginRequestMessage;
+import com.wercent.hero.common.message.LoginResponseMessage;
 import com.wercent.hero.server.service.UserService;
 import com.wercent.hero.server.session.Session;
 import io.netty.channel.ChannelHandler;

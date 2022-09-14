@@ -1,4 +1,4 @@
-package com.wercent.hero.client.message;
+package com.wercent.hero.common.message;
 
 import lombok.Data;
 import lombok.ToString;

@@ -1,11 +1,7 @@
 package com.wercent.hero.server.config;
 
 
-import com.wercent.hero.server.protocol.Serializer;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import com.wercent.hero.common.protocol.Serializer;
 
 public abstract class Config {
 

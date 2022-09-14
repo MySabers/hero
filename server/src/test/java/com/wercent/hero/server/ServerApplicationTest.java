@@ -1,16 +1,19 @@
 package com.wercent.hero.server;
 
+import com.wercent.hero.common.message.LoginRequestMessage;
+import com.wercent.hero.common.message.Message;
+import com.wercent.hero.common.protocol.MessageCodecSharable;
+import com.wercent.hero.common.utils.TypeInfo;
 import com.wercent.hero.server.config.Config;
-import com.wercent.hero.server.message.LoginRequestMessage;
-import com.wercent.hero.server.message.Message;
-import com.wercent.hero.server.protocol.MessageCodecSharable;
-import com.wercent.hero.server.utils.TypeInfo;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+
+import java.lang.annotation.Annotation;
+import java.util.List;
 
 @Slf4j
 public class ServerApplicationTest {
@@ -28,6 +31,11 @@ public class ServerApplicationTest {
             @Override
             public Class<?> getTypeByName(String name) {
                 return LoginRequestMessage.class;
+            }
+
+            @Override
+            public List<Object> getBeansWithAnnotation(Class<? extends Annotation> anno) {
+                return null;
             }
         };
 

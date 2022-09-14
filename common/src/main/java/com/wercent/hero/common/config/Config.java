@@ -1,4 +1,5 @@
-package com.wercent.hero.client.config;
+package com.wercent.hero.common.config;
+
 
 import com.wercent.hero.common.protocol.Serializer;
 
