@@ -3,6 +3,7 @@ package com.wercent.hero.client.gui;
 import com.wercent.hero.common.message.LoginRequestMessage;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -20,6 +21,8 @@ public class Login implements Gui {
     public AtomicBoolean LOGIN = new AtomicBoolean(false);
     public CountDownLatch WAIT_FOR_LOGIN = new CountDownLatch(1);
 
+    private final Index index;
+
 
     /**
      * 如果是程序自动关闭，则不用关闭channel， 否则关闭channel
@@ -27,6 +30,10 @@ public class Login implements Gui {
     private boolean autoClose = false;
 
     private Channel channel;
+
+    public Login(Index index) {
+        this.index = index;
+    }
 
     @Override
     public void process(Channel channel) {
@@ -108,7 +115,7 @@ public class Login implements Gui {
                 JOptionPane.showMessageDialog(null, "用户名或密码不正确!");
             } else {
                 this.destroy();
-                new Index().process(channel);
+                index.process(channel);
             }
         });
     }

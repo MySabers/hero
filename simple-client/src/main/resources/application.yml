@@ -1,8 +1,9 @@
 server:
-  port: 8080
+  port: 8088
+  host: 43.138.34.48
 spring:
   application:
-    name: netty-server
+    name: netty-client
 serializer:
   algorithm: json
 

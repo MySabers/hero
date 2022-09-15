@@ -2,6 +2,8 @@ package com.wercent.hero.server.handler;
 
 import com.wercent.hero.common.message.LoginRequestMessage;
 import com.wercent.hero.common.message.LoginResponseMessage;
+import com.wercent.hero.common.message.UserResponseMessage;
+import com.wercent.hero.server.broadcast.UserBroadcast;
 import com.wercent.hero.server.service.UserService;
 import com.wercent.hero.server.session.Session;
 import io.netty.channel.ChannelHandler;
@@ -19,9 +21,12 @@ public class LoginRequestMessageHandler extends SimpleChannelInboundHandler<Logi
 
     private final Session session;
 
-    public LoginRequestMessageHandler(UserService userService, Session session) {
+    private final UserBroadcast userBroadcast;
+
+    public LoginRequestMessageHandler(UserService userService, Session session, UserBroadcast userBroadcast) {
         this.userService = userService;
         this.session = session;
+        this.userBroadcast = userBroadcast;
     }
 
     @Override
@@ -37,5 +42,10 @@ public class LoginRequestMessageHandler extends SimpleChannelInboundHandler<Logi
             message = new LoginResponseMessage(false, "用户名或密码不正确");
         }
         ctx.writeAndFlush(message);
+        if (login) {
+            UserResponseMessage userResponseMessage =
+                    new UserResponseMessage(userService.getUsersState(), true, "获取用户列表成功");
+            userBroadcast.userStateBroadcast(ctx.channel(), userResponseMessage);
+        }
     }
 }
