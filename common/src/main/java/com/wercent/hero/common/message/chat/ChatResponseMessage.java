@@ -1,14 +1,15 @@
-package com.wercent.hero.common.message;
+package com.wercent.hero.common.message.chat;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.wercent.hero.common.message.AbstractResponseMessage;
+import lombok.*;
 import org.springframework.stereotype.Repository;
 
 @Data
-@ToString(callSuper = true)
-@NoArgsConstructor
 @Repository
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class ChatResponseMessage  extends AbstractResponseMessage {
 
     private String from;

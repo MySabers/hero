@@ -1,7 +1,7 @@
 package com.wercent.hero.client.handler;
 
 import com.wercent.hero.client.gui.Login;
-import com.wercent.hero.common.message.LoginResponseMessage;
+import com.wercent.hero.common.message.login.LoginResponseMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.springframework.stereotype.Controller;

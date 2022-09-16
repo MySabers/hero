@@ -1,9 +1,8 @@
 package com.wercent.hero.client.gui;
 
-import com.wercent.hero.common.message.LoginRequestMessage;
+import com.wercent.hero.common.message.login.LoginRequestMessage;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;

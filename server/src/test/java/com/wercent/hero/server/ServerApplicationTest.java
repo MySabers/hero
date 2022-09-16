@@ -1,6 +1,6 @@
 //package com.wercent.hero.server;
 //
-//import com.wercent.hero.common.message.LoginRequestMessage;
+//import com.wercent.hero.common.message.login.LoginRequestMessage;
 //import com.wercent.hero.common.message.Message;
 //import com.wercent.hero.common.protocol.MessageCodecSharable;
 //import com.wercent.hero.common.utils.TypeInfo;

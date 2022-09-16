@@ -1,8 +1,8 @@
 package com.wercent.hero.client.gui;
 
 import com.google.common.base.Strings;
-import com.wercent.hero.common.message.ChatRequestMessage;
-import com.wercent.hero.common.message.ChatResponseMessage;
+import com.wercent.hero.common.message.chat.ChatRequestMessage;
+import com.wercent.hero.common.message.chat.ChatResponseMessage;
 import com.wercent.hero.common.message.UserRequestMessage;
 import com.wercent.hero.common.message.UserResponseMessage;
 import io.netty.channel.Channel;

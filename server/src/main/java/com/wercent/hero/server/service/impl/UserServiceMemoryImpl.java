@@ -2,7 +2,6 @@ package com.wercent.hero.server.service.impl;
 
 import com.wercent.hero.server.service.UserService;
 import com.wercent.hero.server.session.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

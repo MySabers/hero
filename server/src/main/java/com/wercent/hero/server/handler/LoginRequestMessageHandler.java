@@ -1,7 +1,7 @@
 package com.wercent.hero.server.handler;
 
-import com.wercent.hero.common.message.LoginRequestMessage;
-import com.wercent.hero.common.message.LoginResponseMessage;
+import com.wercent.hero.common.message.login.LoginRequestMessage;
+import com.wercent.hero.common.message.login.LoginResponseMessage;
 import com.wercent.hero.common.message.UserResponseMessage;
 import com.wercent.hero.server.broadcast.UserBroadcast;
 import com.wercent.hero.server.service.UserService;

@@ -2,8 +2,6 @@ package com.wercent.hero.client.core;
 
 import com.wercent.hero.client.gui.Login;
 import com.wercent.hero.client.handler.ClientChannelDuplexHandler;
-import com.wercent.hero.client.handler.LoginResponseHandler;
-import com.wercent.hero.client.handler.UserResponseHandler;
 import com.wercent.hero.common.protocol.MessageCodecSharable;
 import com.wercent.hero.common.protocol.ProtocolFrameDecoder;
 import com.wercent.hero.common.utils.TypeInfo;
